@@ -27,26 +27,43 @@ Built with **Python, scikit-learn, and Streamlit**.
 
 ## Project Structure
 usedbikeprice/
+
 │
+
 ├── data/
+
 │ ├── bikes.csv # Original dataset
+
 │ ├── cleaned_bikes.csv # Cleaned dataset (generated after training)
+
+
 │
+
 ├── models/
+
 │ ├── best_model.joblib # Trained model
+
 │ ├── scaler.joblib # Scaler for numeric features
+
 │ ├── feature_names.joblib # Saved feature names
+
 │
+
 ├── src/
+
 │ ├── model_training.py # Training and preprocessing script
+
 │ ├── app.py # Streamlit web application
+
 │
+
 ├── requirements.txt # Python dependencies
+
 └── README.md # Project documentation
 
-## Example Prediction
+# Example Prediction
 
-# Inputs:
+## Inputs:
 Model Year: 2018
 Kms Driven: 20,000
 Mileage: 40 kmpl
@@ -55,9 +72,10 @@ CC: 150
 Brand: Bajaj
 Location: Mumbai
 Owner: First
-# Output:
+## Output:
 Predicted Price: ₹65,000 (example)
 Model Performance
 Algorithm: Random Forest Regressor
 R² Score: ~0.92
 Mean Absolute Error: ~₹8,500
+
