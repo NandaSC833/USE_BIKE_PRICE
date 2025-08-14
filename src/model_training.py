@@ -40,4 +40,3 @@ joblib.dump(scaler, os.path.join("models", "scaler.joblib"))
 joblib.dump(list(X.columns), os.path.join("models", "feature_names.joblib"))
 
 print("✅ Model training completed. Model & scaler saved.")
-

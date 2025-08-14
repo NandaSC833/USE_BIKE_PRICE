@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import joblib
 import os
+import matplotlib.pyplot as plt  # ✅ Added
 
 # Page config
 st.set_page_config(page_title="Used Bike Price Prediction", page_icon="🏍️", layout="centered")
@@ -89,18 +90,34 @@ if st.button("🚀 Predict Price"):
         unsafe_allow_html=True
     )
 
-    # Find similar bikes from dataset
+    # Find similar bikes
     filtered = cleaned_data.copy()
     filtered = filtered[filtered["brand"].str.lower() == brand.lower()]
     filtered["year_diff"] = abs(filtered["model_year"] - model_year)
     filtered["kms_diff"] = abs(filtered["kms_driven"] - kms_driven)
     filtered["cc_diff"] = abs(filtered["cc"] - cc)
-
-    # Sort by closest match
     similar_bikes = filtered.sort_values(by=["year_diff", "kms_diff", "cc_diff"]).head(5)
-
-    # Drop helper columns
     similar_bikes = similar_bikes.drop(columns=["year_diff", "kms_diff", "cc_diff"])
 
     st.markdown("### 📊 Top 5 Similar Bikes in Dataset")
     st.dataframe(similar_bikes[["model_year", "brand", "model_name", "kms_driven", "mileage", "cc", "price"]])
+
+    # Chart comparison
+    st.markdown("### 📈 Price Comparison Chart")
+    fig, ax = plt.subplots()
+    labels = list(similar_bikes["model_name"]) + ["Predicted Bike"]
+    prices = list(similar_bikes["price"]) + [price_pred]
+    colors = ["#4682B4"] * len(similar_bikes) + ["#FF4500"]
+
+    bars = ax.bar(labels, prices, color=colors)
+    ax.set_ylabel("Price (₹)")
+    ax.set_title("Predicted Price vs Similar Bikes")
+    plt.xticks(rotation=45, ha="right")
+
+    # Add labels on top of bars
+    for bar in bars:
+        height = bar.get_height()
+        ax.text(bar.get_x() + bar.get_width()/2, height, f"₹{int(height):,}", 
+                ha='center', va='bottom', fontsize=8, rotation=0)
+
+    st.pyplot(fig)

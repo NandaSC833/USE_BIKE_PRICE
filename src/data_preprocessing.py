@@ -53,4 +53,3 @@ os.makedirs("data", exist_ok=True)
 df.to_csv(os.path.join("data", "cleaned_bikes.csv"), index=False)
 
 print("✅ Data preprocessing completed. Saved to data/cleaned_bikes.csv")
-
